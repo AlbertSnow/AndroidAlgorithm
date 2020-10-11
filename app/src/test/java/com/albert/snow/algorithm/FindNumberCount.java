@@ -16,6 +16,11 @@ public class FindNumberCount {
 
         double result = count(num, nums1);
         assert expect == result;
+
+        assert 1 == count(1, nums1);
+        assert 2 == count(2, nums1);
+        assert 2 == count(3, nums1);
+        assert 1 == count(4, nums1);
     }
 
     final int INVALID_INDEX = -1;
@@ -29,42 +34,55 @@ public class FindNumberCount {
         //tag1
         int firstIndex = 0;
         int lastIndex = numArray.length - 1;
-        int index = findIndex(firstIndex, lastIndex, numArray, num);
+        int leftIndex = getFirstNumber(firstIndex, lastIndex, numArray, num);
 
-        if (index < 0) {
+        if (leftIndex < 0) {
             return 0;
         }
-
-        int leftIndex = index;
-        while (leftIndex - 1 >= 0 && numArray[leftIndex - 1] == num) {
-            leftIndex--;
-        }
-
-        int rightIndex = index;
-        while (rightIndex + 1 < numArray.length && numArray[rightIndex + 1] == num) {
-            rightIndex++;
-        }
+        int rightIndex = getEndNumber(firstIndex, lastIndex, numArray, num);
 
         return rightIndex - leftIndex + 1;
     }
 
-    private int findIndex(int firstIndex, int lastIndex, int[] numArray, int num) {
+    private int getFirstNumber(int firstIndex, int lastIndex, int[] numArray, int num) {
         int mediumIndex = (lastIndex - firstIndex) / 2 + firstIndex;
 
         if (num == numArray[mediumIndex]) {
-            return mediumIndex;
-        } else if (num == numArray[lastIndex]) {
-            return lastIndex;
+
+            if (mediumIndex == 0 || numArray[mediumIndex - 1] != num) {
+                return mediumIndex;
+            } else {
+                lastIndex = mediumIndex - 1;
+            }
+
         } else if (firstIndex >= lastIndex) {
             return INVALID_INDEX;
-        }
-
-        if (num < numArray[mediumIndex]) {
-            lastIndex = mediumIndex;
+        } else if (num < numArray[mediumIndex]) {
+            lastIndex = mediumIndex - 1;
         } else if (num > numArray[mediumIndex]) {
-            firstIndex = mediumIndex;
+            firstIndex = mediumIndex + 1;
         }
-        return findIndex(firstIndex, lastIndex, numArray, num);
+        return getFirstNumber(firstIndex, lastIndex, numArray, num);
+    }
+
+    private int getEndNumber(int firstIndex, int lastIndex, int[] numArray, int num) {
+        int mediumIndex = (lastIndex - firstIndex) / 2 + firstIndex;
+
+        if (num == numArray[mediumIndex]) {
+
+            if (mediumIndex == numArray.length - 1 || numArray[mediumIndex + 1] != num) {
+                return mediumIndex;
+            } else {
+                firstIndex = mediumIndex + 1;
+            }
+        } else if (firstIndex >= lastIndex) {
+            return INVALID_INDEX;
+        } else if (num < numArray[mediumIndex]) {
+            lastIndex = mediumIndex - 1;
+        } else if (num > numArray[mediumIndex]) {
+            firstIndex = mediumIndex + 1;
+        }
+        return getEndNumber(firstIndex, lastIndex, numArray, num);
     }
 
 
