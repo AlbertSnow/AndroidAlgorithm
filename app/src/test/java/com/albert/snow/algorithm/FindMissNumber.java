@@ -28,13 +28,6 @@ public class FindMissNumber {
         int middleIndex = (start + end) / 2;
 
         if (start == end) {
-
-            if (middleIndex < 0) {
-                return 0;
-            } else if (middleIndex > nums1.length - 1) {
-                return nums1.length;
-            }
-
             if (middleIndex == nums1[middleIndex]) {
                 return middleIndex + 1;
             } else if (middleIndex < nums1[middleIndex]) {
