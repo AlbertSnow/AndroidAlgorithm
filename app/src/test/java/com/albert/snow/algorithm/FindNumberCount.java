@@ -85,5 +85,30 @@ public class FindNumberCount {
         return getEndNumber(firstIndex, lastIndex, numArray, num);
     }
 
+    private int bookMethod(int start, int end, int[] numArray, int num) {
+        if (start > end) {
+            return -1;
+        }
+
+        int length = numArray.length;
+        int middleIndex = (start + end) / 2;
+        int middleValue = numArray[middleIndex];
+
+        if (middleValue == num) {
+            if ((middleIndex < length - 1 && numArray[middleIndex + 1] != num) ||
+                middleIndex == length - 1) {
+                return middleIndex;
+            } else {
+                start = middleIndex + 1;
+            }
+        } else if (middleValue < num) {
+            start = middleIndex + 1;
+        } else {
+            end = middleIndex - 1;
+        }
+
+        return bookMethod(start, end, numArray, num);
+    }
+
 
 }
