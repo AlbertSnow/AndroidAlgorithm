@@ -42,6 +42,34 @@ public class FindMissNumber {
         return find(start, end, nums1);
     }
 
+    private int bookMethod(int start, int end, int[] nums1) {
+        if (nums1 == null || nums1.length <= 0) {
+            return -1;
+        }
+        int length = nums1.length;
+
+        int left = 0;
+        int right = length - 1;
+        while (left <= right) {
+            int middle = (right + left) >> 1;
+
+            if (nums1[middle] != middle) {
+                if (middle == 0 || nums1[middle - 1] == middle - 1) {
+                    return middle;
+                }
+                right = middle - 1;
+            } else {
+                left = middle + 1;
+            }
+        }
+
+        if (left == length) {
+            return length;
+        }
+
+        return -1;
+    }
+
 
 
 }
