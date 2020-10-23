@@ -9,7 +9,7 @@ public class LongestPalindrome {
     public void doTest() {
 //        float centerIndex = getLongestIndex("123456899");
 //        System.out.println("MaxIndex: " + centerIndex);
-        String longest = getLongestIndex("12333456899");
+        String longest = getLongestIndex("bb");
         System.out.println("MaxIndex: " + longest);
 
     }
@@ -38,7 +38,7 @@ public class LongestPalindrome {
             int right = centerIndex + 1;
 
             iteratorResult = 1;
-            while (left > 0 && right < size && (array.charAt(left) == array.charAt(right))) {
+            while (left >= 0 && right < size && (array.charAt(left) == array.charAt(right))) {
                 left--;
                 right++;
                 iteratorResult += 2;
@@ -48,13 +48,13 @@ public class LongestPalindrome {
                 maxResult = iteratorResult;
                 maxIndex = centerIndex;
                 maxLeft = ++left;
-                maxRight = ++right;
+                maxRight = --right;
             }
 
             left = centerIndex;
             right = centerIndex + 1;
             iteratorResult = 0;
-            while (left > 0 && right < size && (array.charAt(left) == array.charAt(right))) {
+            while (left >= 0 && right < size && (array.charAt(left) == array.charAt(right))) {
                 left--;
                 right++;
                 iteratorResult += 2;
@@ -64,7 +64,7 @@ public class LongestPalindrome {
                 maxResult = iteratorResult;
                 maxIndex = centerIndex + 0.5f;
                 maxLeft = ++left;
-                maxRight = ++right;
+                maxRight = --right;
             }
 
 
@@ -72,8 +72,8 @@ public class LongestPalindrome {
         }
 
 
-        String result = array.substring(maxLeft, Math.min(maxRight + 1, size - 1));
-        System.out.println("MaxResult: " + result);
+        String result = array.substring(maxLeft, Math.min(maxRight + 1, size));
+        System.out.println("MaxResult: " + maxIndex);
         return result;
     }
 
