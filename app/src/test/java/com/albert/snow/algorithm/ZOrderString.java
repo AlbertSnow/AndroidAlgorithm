@@ -106,14 +106,19 @@ public class ZOrderString {
             preItem = item;
         }
 
-        while (index >= 0 && index != (n-1)  && !add) {
+        while (index <= (n-2)  && !add) {
             TreeNode item = new TreeNode(-1);
             if (index == 0) {
                 roots.add(item);
+                add = true;
             }
 
-            item.left = preItem;
+            if (index < n -2) {
+                item.left = preItem;
+            }
+
             index--;
+            preItem = item;
         }
 
 
